@@ -1,0 +1,351 @@
+/* =========================================
+   1. CSS Variables & Theme Colors
+========================================= */
+:root {
+  /* Core Backgrounds */
+  --bg-main: #0a0a0a;
+  --bg-panel: #141416;
+  --bg-panel-light: #1f1f23;
+  
+  /* Accents */
+  --accent-purple: #7b61ff;
+  --accent-green: #2ecc71;
+  --accent-red: #ff4757;
+  --accent-yellow: #f1c40f;
+  
+  /* Text Colors */
+  --text-primary: #ffffff;
+  --text-secondary: #9ca3af;
+  --text-muted: #6b7280;
+  
+  /* Borders & Shadows */
+  --border-subtle: #27272a;
+  --shadow-glow: 0 0 15px rgba(46, 204, 113, 0.3);
+  --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+  
+  /* Animation Timings */
+  --transition-fast: 0.2s ease;
+  --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* =========================================
+   2. Global Resets & Typography
+========================================= */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  /* Enables smooth scrolling for anchor links and horizontal containers */
+  scroll-behavior: smooth; 
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  line-height: 1.5;
+}
+
+/* =========================================
+   3. Custom Scrollbars (Vertical & Horizontal)
+========================================= */
+/* Target the whole track */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px; /* For horizontal scrollbars */
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-main);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bg-panel-light);
+  border-radius: 4px;
+  transition: background var(--transition-fast);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* =========================================
+   4. Layout Containers
+========================================= */
+.app-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Horizontal scrolling container (for Movie lists) */
+.horizontal-scroll-container {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+  scroll-snap-type: x mandatory; /* Snaps cards into place */
+}
+
+/* =========================================
+   5. Card & Widget Styles
+========================================= */
+.widget-panel {
+  background-color: var(--bg-panel);
+  border: 1px solid var(--border-subtle);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-card);
+  transition: transform var(--transition-smooth), box-shadow var(--transition-smooth);
+}
+
+/* Interactive Card Hover Effects (Category & Movie Cards) */
+.interactive-card {
+  position: relative;
+  border-radius: 1rem;
+  overflow: hidden;
+  cursor: pointer;
+  scroll-snap-align: start;
+  transition: transform var(--transition-smooth), filter var(--transition-smooth);
+}
+
+.interactive-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  filter: brightness(1.1);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
+  z-index: 10;
+}
+
+/* Image scaling effect inside cards */
+.interactive-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-smooth);
+}
+
+.interactive-card:hover img {
+  transform: scale(1.05); /* Slight zoom on image */
+}
+
+/* =========================================
+   6. Buttons & Inputs
+========================================= */
+.btn-primary {
+  background-color: var(--accent-green);
+  color: #000;
+  font-weight: 700;
+  border: none;
+  border-radius: 2rem;
+  padding: 0.75rem 2rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-primary:hover {
+  background-color: #27ae60;
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-2px);
+}
+
+.btn-primary:active {
+  transform: translateY(1px);
+}
+
+/* =========================================
+   7. Animations (Keyframes)
+========================================= */
+/* Fade in for page load or modal open */
+.fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Modal Backdrop */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  animation: fadeIn 0.3s ease-out;
+}
+
+
+/* =========================================
+   8. News Widget Styles
+========================================= */
+.news-widget-container {
+  background-color: var(--text-primary); /* White background for news */
+  color: var(--bg-main); /* Black text */
+  border-radius: 1.5rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+}
+
+.news-image-wrapper {
+  height: 60%; /* Takes up top 60% of the card */
+  width: 100%;
+  overflow: hidden;
+}
+
+.news-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* This is the magic property for responsive images! */
+  display: block;
+}
+
+.news-content {
+  height: 40%;
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+.news-title-overlay {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #ffffff;
+  padding: 1rem;
+  backdrop-filter: blur(4px);
+  transform: translateY(-100%); /* Pushes it up to sit right above the text section */
+}
+
+.news-title-overlay h2 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Truncates long titles after 2 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+
+/* =========================================
+   9. Responsive Mobile Layouts
+========================================= */
+
+/* Desktop Layout Classes */
+.categories-layout {
+  display: flex;
+  gap: 4rem;
+  min-height: 100vh;
+  padding: 4rem 2rem;
+}
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.dashboard-layout {
+  display: flex;
+  gap: 2rem;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+.dashboard-left {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.dashboard-top-row {
+  display: flex;
+  gap: 1.5rem;
+  height: 16rem;
+}
+
+.dashboard-profile, .dashboard-weather {
+  width: 50%;
+}
+
+.dashboard-middle {
+  width: 20%;
+}
+
+.dashboard-right {
+  width: 20%;
+  height: 35rem;
+}
+
+/* Mobile Breakpoints (Screens smaller than 900px) */
+@media (max-width: 900px) {
+  /* Register Mobile */
+  .form-container {
+    width: 90%;
+    margin: 2rem auto;
+    padding: 1.5rem;
+  }
+
+  /* Categories Mobile */
+  .categories-layout {
+    flex-direction: column;
+    padding: 2rem 1rem;
+    gap: 2rem;
+  }
+  
+  .categories-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on mobile instead of 3 */
+  }
+
+  /* Dashboard Mobile */
+  .dashboard-layout {
+    flex-direction: column;
+    padding: 1rem;
+  }
+  
+  .dashboard-left, .dashboard-middle, .dashboard-right {
+    width: 100%; /* Everything takes up full width */
+    height: auto;
+  }
+  
+  .dashboard-top-row {
+    flex-direction: column;
+    height: auto;
+  }
+  
+  .dashboard-profile, .dashboard-weather {
+    width: 100%;
+    height: 18rem;
+  }
+  
+  .dashboard-right {
+    height: 30rem;
+    margin-bottom: 5rem; /* Leaves space so the Browse button doesn't cover news */
+  }
+
+  /* Movies Mobile */
+  .horizontal-scroll-container {
+    padding-bottom: 1.5rem;
+  }
+}
